@@ -36,6 +36,13 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Create laioutrrc.json from CI mock
+        run: cp laioutrrc.ci.json laioutrrc.json
+
+      # `prepack` builds the module against ./.nuxt/tsconfig.json, generated here.
+      - name: Prepare
+        run: pnpm run dev:prepare
+
       # Opens/updates a "Version Packages" PR while changesets are pending.
       # When that PR is merged, runs `pnpm release` to build + publish to npmjs.org.
       - name: Create Release PR or publish
