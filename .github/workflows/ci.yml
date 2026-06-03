@@ -29,6 +29,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Create laioutrrc.json from CI mock
+        run: cp laioutrrc.ci.json laioutrrc.json
+
       - name: Prepare
         run: pnpm run dev:prepare
 
@@ -54,6 +57,9 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install
+
+      - name: Create laioutrrc.json from CI mock
+        run: cp laioutrrc.ci.json laioutrrc.json
 
       - name: Playground prepare
         run: pnpm run dev:prepare
