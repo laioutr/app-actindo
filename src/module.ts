@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-empty-object-type */
-import { createResolver, defineNuxtModule, installModule } from '@nuxt/kit';
+import { addServerImportsDir, createResolver, defineNuxtModule, installModule } from '@nuxt/kit';
 import { defu } from 'defu';
 import { registerLaioutrApp } from '@laioutr-core/kit';
 import { name, version } from '../package.json';
@@ -7,10 +7,32 @@ import { name, version } from '../package.json';
 /**
  * The options the module adds to the nuxt.config.ts.
  */
-export interface ModuleOptions {}
+export interface ModuleOptions {
+  /**
+   * Base URL of the Actindo Storefront Data Service.
+   *
+   * @default 'https://laioutr.actindo.com'
+   * @see https://laioutr.actindo.com/docs#/
+   */
+  baseUrl: string;
+  /**
+   * Per-tenant Bearer API key for the Actindo Storefront Data Service.
+   *
+   * Resolves server-side to exactly one Actindo tenant. This is a secret: it
+   * lives in the private runtime config only and is never exposed to the
+   * client. Prefer injecting it via the `ACTINDO_API_KEY` env var rather than
+   * committing it to `nuxt.config`.
+   *
+   * @default '' (must be provided before the client can connect)
+   */
+  apiKey: string;
+}
 
 /**
- * The config the module adds to nuxt.runtimeConfig.public['my-laioutr-app']
+ * The config the module adds to nuxt.runtimeConfig.public['my-laioutr-app'].
+ *
+ * Intentionally empty — this app holds no client-exposed config. The Actindo
+ * connection (incl. the API key) is server-only.
  */
 export interface RuntimeConfigModulePublic {}
 
@@ -26,17 +48,26 @@ export default defineNuxtModule<ModuleOptions>({
     configKey: name, // configKey must match package name
   },
   // Default configuration options of the Nuxt module
-  defaults: {},
+  defaults: {
+    baseUrl: 'https://laioutr.actindo.com',
+    apiKey: '',
+  },
   async setup(_options, nuxt) {
     const { resolve } = createResolver(import.meta.url);
     const resolveRuntimeModule = (path: string) => resolve('./runtime', path);
 
     nuxt.options.build.transpile.push(resolve('./runtime'));
 
-    // Runtime configuration for this module
-    // These two statements can be removed if you don't provide a runtime config
+    // Private runtime config: holds the Actindo connection incl. the secret
+    // API key. Server-only — never merged into the public config below.
     nuxt.options.runtimeConfig[name] = defu(nuxt.options.runtimeConfig[name] as Parameters<typeof defu>[0], _options);
-    nuxt.options.runtimeConfig.public[name] = defu(nuxt.options.runtimeConfig.public[name] as Parameters<typeof defu>[0], _options);
+    // Public runtime config: deliberately carries no module options so the
+    // API key cannot leak into the client bundle.
+    nuxt.options.runtimeConfig.public[name] = defu(nuxt.options.runtimeConfig.public[name] as Parameters<typeof defu>[0], {});
+
+    // Expose the server-side Actindo client (`useActindoClient`) as a Nitro
+    // auto-import for use in server routes and Orchestr handlers.
+    addServerImportsDir(resolveRuntimeModule('server/utils'));
 
     await registerLaioutrApp({
       name,
