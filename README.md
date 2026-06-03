@@ -1,13 +1,4 @@
-<!--
-Get your module up and running quickly.
-
-Find and replace all on all files (CMD+SHIFT+F):
-- Name: My Laioutr App
-- Package name: my-laioutr-app
-- Description: My new Laioutr App
--->
-
-# My Laioutr App
+# Actindo App for Laioutr
 
 [![Laioutr][laioutr-src]][laioutr-href]
 [![npm version][npm-version-src]][npm-version-href]
@@ -15,21 +6,40 @@ Find and replace all on all files (CMD+SHIFT+F):
 [![License][license-src]][license-href]
 [![Nuxt][nuxt-src]][nuxt-href]
 
-My new [Laioutr](https://laioutr.com) App for doing amazing things using Nuxt.
+A [Laioutr](https://laioutr.com) App that integrates the **Actindo** Order Management System into the Laioutr platform.
+
+The app connects a Laioutr storefront to Actindo as its commerce data source — products, variants, categories, navigation and availability — through the **Actindo Storefront Data Service**, a read-only web service provided by Actindo. The API is documented at [laioutr.actindo.com/docs](https://laioutr.actindo.com/docs#/).
 
 See [laioutr.com](https://laioutr.com) for more information about Laioutr.
 
 - [✨ &nbsp;Release Notes](/CHANGELOG.md)
-  <!-- - [🏀 Online playground](https://stackblitz.com/github/your-org/my-laioutr-app?file=playground%2Fapp.vue) -->
-  <!-- - [📖 &nbsp;Documentation](https://example.com) -->
+
+## How it works
+
+The Actindo Storefront Data Service is a **layout-facing read API** whose field shapes mirror the Laioutr canonical components, so its responses map cleanly onto the storefront. This app wraps that service and exposes its data to the storefront through [Orchestr](https://docs.laioutr.io) query handlers.
+
+- **Authentication** — the service uses a per-tenant Bearer API key (`bearerAuth`) that resolves server-side to exactly one Actindo tenant.
+- **Direction** — read-only. The app consumes Actindo data for rendering; it does not write back to Actindo.
+- **Mapping** — response shapes follow the canonical layout components, minimizing transformation between Actindo and the storefront.
+
+### Data the service provides
+
+| Resource | Operations |
+| --- | --- |
+| **Products** | by slug, search (with filters & facets), batch fetch by IDs, breadcrumb |
+| **Variants** | per-product variant IDs, batch fetch variants |
+| **Availability** | batch availability check for multiple items |
+| **Categories** | by slug, list all IDs, batch fetch, products within a category |
+| **Navigation** | navigation tree by alias |
+| **Health** | service health check |
 
 ## Features
 
-<!-- Highlight some of the features your module provide here -->
-
-- ⛰ &nbsp;Foo
-- 🚠 &nbsp;Bar
-- 🌲 &nbsp;Baz
+- 🛒 &nbsp;Actindo as the storefront commerce data source
+- 🔎 &nbsp;Product & category search with filters and facets
+- 🧬 &nbsp;Variant and availability resolution
+- 🧭 &nbsp;Category-driven navigation trees
+- 🔌 &nbsp;Canonical-aligned responses, wired in via Orchestr handlers
 
 ## Quick Setup
 
@@ -40,7 +50,9 @@ Before installing dependencies, you need to create a copy of the `.npmrc.config`
 - `pnpm dev:prepare`
 - `pnpm orchestr-dev`
 
-That's it! You can now use My Laioutr App in your [Laioutr Frontend](https://laioutr.com) ✨
+You also need to configure the Actindo connection. The Storefront Data Service expects a per-tenant Bearer API key; provide it through the module's runtime config so it is only available server-side and never exposed to the client.
+
+That's it! You can now use the Actindo App in your [Laioutr Frontend](https://laioutr.com) ✨
 
 You can find a thorough guide on getting started with Laioutr development in our [developer guide](https://docs.laioutr.io/developer-guide/setup).
 
