@@ -85,12 +85,12 @@ Follow the [setup guide](https://docs.laioutr.io/developer-guide/setup) to get s
 
 <!-- Badges -->
 
-[npm-version-src]: https://img.shields.io/npm/v/my-laioutr-app/latest.svg?style=flat&colorA=020420&colorB=00DC82
-[npm-version-href]: https://npmjs.com/package/my-laioutr-app
-[npm-downloads-src]: https://img.shields.io/npm/dm/my-laioutr-app.svg?style=flat&colorA=020420&colorB=00DC82
-[npm-downloads-href]: https://npm.chart.dev/my-laioutr-app
-[license-src]: https://img.shields.io/npm/l/my-laioutr-app.svg?style=flat&colorA=020420&colorB=00DC82
-[license-href]: https://npmjs.com/package/my-laioutr-app
+[npm-version-src]: https://img.shields.io/npm/v/app-actindo/latest.svg?style=flat&colorA=020420&colorB=00DC82
+[npm-version-href]: https://npmjs.com/package/app-actindo
+[npm-downloads-src]: https://img.shields.io/npm/dm/app-actindo.svg?style=flat&colorA=020420&colorB=00DC82
+[npm-downloads-href]: https://npm.chart.dev/app-actindo
+[license-src]: https://img.shields.io/npm/l/app-actindo.svg?style=flat&colorA=020420&colorB=00DC82
+[license-href]: https://npmjs.com/package/app-actindo
 [nuxt-src]: https://img.shields.io/badge/Nuxt-020420?logo=nuxt.js
 [nuxt-href]: https://nuxt.com
 [laioutr-src]: https://img.shields.io/badge/%F0%9F%A6%99_Laioutr_App-702DCE

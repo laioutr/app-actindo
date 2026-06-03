@@ -1,8 +1,8 @@
 {
-  "name": "my-laioutr-app",
+  "name": "app-actindo",
   "version": "1.0.0",
-  "description": "My new Laioutr App",
-  "repository": "your-org/my-laioutr-app",
+  "description": "Actindo Storefront Data Service connector for Laioutr",
+  "repository": "laioutr/app-actindo",
   "license": "MIT",
   "type": "module",
   "exports": {
@@ -42,7 +42,7 @@
     "zod": "3.25.61"
   },
   "devDependencies": {
-    "@laioutr-app/ui": "^1.32.2",
+    "@laioutr-app/ui": "^2.2.3",
     "@laioutr-core/orchestr-devtools": "^1.7.0",
     "@laioutr/eslint-config": "^1.8.8",
     "@laioutr/prettier-config": "^1.1.0",
@@ -64,9 +64,9 @@
     "vue-tsc": "2.2.10"
   },
   "peerDependencies": {
-    "@laioutr-core/canonical-types": ">=0.22.13",
-    "@laioutr-core/core-types": ">=0.28.8",
-    "@laioutr-core/frontend-core": ">=0.28.8"
+    "@laioutr-core/canonical-types": ">=0.22.25",
+    "@laioutr-core/core-types": ">=0.30.3",
+    "@laioutr-core/frontend-core": ">=0.30.3"
   },
   "engines": {
     "node": ">=22.12.0",

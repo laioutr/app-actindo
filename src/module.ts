@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-empty-object-type */
-import { addServerImportsDir, createResolver, defineNuxtModule, installModule } from '@nuxt/kit';
+import { addPlugin, addServerImportsDir, createResolver, defineNuxtModule, installModule } from '@nuxt/kit';
 import { defu } from 'defu';
 import { registerLaioutrApp } from '@laioutr-core/kit';
 import { name, version } from '../package.json';
@@ -26,10 +26,21 @@ export interface ModuleOptions {
    * @default '' (must be provided before the client can connect)
    */
   apiKey: string;
+  /**
+   * Maps the storefront's locale codes to the locale codes the Actindo tenant
+   * expects, applied to every catalog request. The service keys data per full
+   * locale tag (e.g. `de-DE`) and does NOT fall back from a bare language tag
+   * for slug resolution, so a storefront language of `de` must be mapped to
+   * `de-DE` or the whole catalog 404s.
+   *
+   * @default {} (locale forwarded unchanged)
+   * @example { de: 'de-DE', en: 'en-US' }
+   */
+  localeMap: Record<string, string>;
 }
 
 /**
- * The config the module adds to nuxt.runtimeConfig.public['my-laioutr-app'].
+ * The config the module adds to nuxt.runtimeConfig.public['app-actindo'].
  *
  * Intentionally empty — this app holds no client-exposed config. The Actindo
  * connection (incl. the API key) is server-only.
@@ -37,7 +48,7 @@ export interface ModuleOptions {
 export interface RuntimeConfigModulePublic {}
 
 /**
- * The config the module adds to nuxt.runtimeConfig['my-laioutr-app']
+ * The config the module adds to nuxt.runtimeConfig['app-actindo']
  */
 export interface RuntimeConfigModulePrivate extends ModuleOptions {}
 
@@ -51,6 +62,7 @@ export default defineNuxtModule<ModuleOptions>({
   defaults: {
     baseUrl: 'https://laioutr.actindo.com',
     apiKey: '',
+    localeMap: {},
   },
   async setup(_options, nuxt) {
     const { resolve } = createResolver(import.meta.url);
@@ -67,7 +79,7 @@ export default defineNuxtModule<ModuleOptions>({
 
     // Expose the server-side Actindo client (`useActindoClient`) as a Nitro
     // auto-import for use in server routes and Orchestr handlers.
-    addServerImportsDir(resolveRuntimeModule('server/utils'));
+    addServerImportsDir(resolveRuntimeModule('server/client'));
 
     await registerLaioutrApp({
       name,
@@ -75,7 +87,20 @@ export default defineNuxtModule<ModuleOptions>({
       orchestrDirs: [resolveRuntimeModule('server/orchestr')],
       sections: [resolveRuntimeModule('app/sections')],
       blocks: [resolveRuntimeModule('app/blocks')],
+      // The service emits absolute media URLs tagged with this provider; the
+      // mappers set every image source's `provider` to `actindo`.
+      nuxtImageProviders: {
+        actindo: {
+          name: 'actindo',
+          provider: resolveRuntimeModule('app/image/providers/actindo'),
+        },
+      },
     });
+
+    // Register the commerce page types (PDP / listing / search) this connector
+    // powers. The plugin touches the canonical page-type tokens so their
+    // import-time registration survives tree-shaking.
+    addPlugin(resolveRuntimeModule('app/plugins/pagetypes'));
 
     // Install peer-dependency modules only on prepare-step.
     // This makes auto-imports and import-aliases work. Remove any modules you might not need.
