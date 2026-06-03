@@ -1,6 +1,6 @@
+import { type ActindoClient, createActindoClient } from './actindoClient';
 import { useRuntimeConfig } from '#imports';
 import type { H3Event } from 'h3';
-import { createActindoClient, type ActindoClient } from './actindoClient';
 
 /**
  * Runtime-config slice this module owns. The key mirrors the module
