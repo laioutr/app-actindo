@@ -43,7 +43,9 @@
     "> 0.5% and not dead"
   ],
   "dependencies": {
+    "@laioutr-core/kit": "^0.28.8",
     "@nuxt/kit": "3.16.2",
+    "defu": "^6.1.4",
     "ofetch": "^1.4.1",
     "zod": "3.25.61"
   },
