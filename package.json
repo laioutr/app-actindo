@@ -1,8 +1,8 @@
 {
-  "name": "my-laioutr-app",
-  "version": "1.0.0",
-  "description": "My new Laioutr App",
-  "repository": "your-org/my-laioutr-app",
+  "name": "@laioutr/app-actindo",
+  "version": "0.0.0",
+  "description": "Actindo connector app for Laioutr",
+  "repository": "github:laioutr/app-actindo",
   "license": "MIT",
   "type": "module",
   "exports": {
@@ -22,13 +22,19 @@
   "files": [
     "dist"
   ],
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
   "scripts": {
     "dev": "npm run dev:prepare && nuxi dev playground",
     "dev:build": "nuxi build playground",
     "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
     "lint": "eslint .",
     "prepack": "nuxt-module-build build",
-    "release": "npm run lint && npm run test && npm run prepack && changelogen --release && npm publish && git push --follow-tags",
+    "changeset": "changeset",
+    "version": "changeset version",
+    "release": "pnpm run prepack && changeset publish",
     "test": "vitest run",
     "test:types": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit",
     "test:watch": "vitest watch"
@@ -42,6 +48,7 @@
     "zod": "3.25.61"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.31.0",
     "@laioutr-app/ui": "^1.32.2",
     "@laioutr-core/orchestr-devtools": "^1.7.0",
     "@laioutr/eslint-config": "^1.8.8",
@@ -55,7 +62,6 @@
     "@pinia/colada-nuxt": "0.2.1",
     "@types/node": "latest",
     "@vueuse/core": "13.1.0",
-    "changelogen": "^0.6.2",
     "eslint": "^9.35.0",
     "nuxt": "3.16.2",
     "pinia": "3.0.2",
@@ -70,7 +76,7 @@
   },
   "engines": {
     "node": ">=22.12.0",
-    "pnpm": ">=10.15.0"
+    "pnpm": ">=10.16.0"
   },
-  "packageManager": "pnpm@10.15.0"
+  "packageManager": "pnpm@10.34.1"
 }
