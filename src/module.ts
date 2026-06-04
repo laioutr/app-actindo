@@ -40,7 +40,7 @@ export interface ModuleOptions {
 }
 
 /**
- * The config the module adds to nuxt.runtimeConfig.public['app-actindo'].
+ * The config the module adds to nuxt.runtimeConfig.public['@laioutr/app-actindo'].
  *
  * Intentionally empty — this app holds no client-exposed config. The Actindo
  * connection (incl. the API key) is server-only.
@@ -48,7 +48,7 @@ export interface ModuleOptions {
 export interface RuntimeConfigModulePublic {}
 
 /**
- * The config the module adds to nuxt.runtimeConfig['app-actindo']
+ * The config the module adds to nuxt.runtimeConfig['@laioutr/app-actindo']
  */
 export interface RuntimeConfigModulePrivate extends ModuleOptions {}
 

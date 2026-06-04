@@ -1,3 +1,8 @@
+// The runtime-config namespace this module owns. Must equal the module
+// `configKey` (the package `name`), so handlers read the same slice the module
+// writes. Kept here as the single source of truth for the runtime side.
+export const APP_CONFIG_KEY = '@laioutr/app-actindo';
+
 // Hard ceiling enforced by the service on `:batch` id lists (products/variants/categories).
 export const ACTINDO_BATCH_LIMIT = 200;
 

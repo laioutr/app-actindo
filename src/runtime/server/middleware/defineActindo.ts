@@ -1,5 +1,6 @@
 import { defineOrchestr, useRuntimeConfig } from '#imports';
 import { useActindoClient } from '../client/useActindoClient';
+import { APP_CONFIG_KEY } from '../const';
 
 /**
  * Orchestr middleware for the Actindo connector. Builds the request-scoped
@@ -17,7 +18,7 @@ export const defineActindo = defineOrchestr
   .extendRequest(async ({ event, clientEnv }) => {
     // Map the storefront locale to the tenant's locale dialect (e.g. de → de-DE);
     // the service does not fall back from a bare language tag for slug lookups.
-    const localeMap = useRuntimeConfig(event)['app-actindo'].localeMap as Record<string, string> | undefined;
+    const localeMap = useRuntimeConfig(event)[APP_CONFIG_KEY].localeMap as Record<string, string> | undefined;
     const locale = localeMap?.[clientEnv.locale] ?? clientEnv.locale;
 
     return {

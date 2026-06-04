@@ -18,7 +18,7 @@ export default defineNuxtConfig({
   // The platform supplies the key (module option / `ACTINDO_API_KEY`); the client
   // factory resolves it from runtime config with an env fallback.
   runtimeConfig: {
-    'app-actindo': {
+    '@laioutr/app-actindo': {
       apiKey: import.meta.env.ACTINDO_API_KEY,
       // The storefront language is `de`, but the Actindo tenant keys its catalog
       // under `de-DE` (and does not fall back) — map it so slugs resolve.
