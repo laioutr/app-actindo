@@ -62,22 +62,15 @@ We use ESLint and Prettier to lint and format the code. This repository contains
 
 ## Publishing
 
-To publish a new version, run `pnpm release`. This will:
+Releases are managed with [Changesets](https://github.com/changesets/changesets) and published to npmjs.org automatically by the `release` workflow.
 
-- Run the tests
-- Update the changelog
-- Publish the package to npmjs.org
-- Push the changes to the repository
+To ship a change:
 
-### Private publishing
+1. In your PR, run `pnpm changeset` and follow the prompt to record the change and the version bump (patch/minor/major). Commit the generated file in `.changeset/`.
+2. Merge the PR to `main`. The release workflow opens (or updates) a **"Version Packages"** PR that applies the pending changesets to the version and `CHANGELOG.md`.
+3. Merge the "Version Packages" PR. The workflow builds the package and publishes it to npmjs.org, tags the commit, and creates a GitHub release.
 
-If you want to publish a private package to npm.laioutr.cloud, you need to:
-
-1. Make sure you have a `.npmrc` with your private npm registry token.
-2. Add this line to the root of the `package.json` file: `"publishConfig": { "registry": "https://npm.laioutr.cloud/" }`
-3. Make sure your package-name follows the `@laioutr-org/<organization-slug>_<package-name>` format.
-
-After that you can run `pnpm release` to publish the package to npm.laioutr.cloud.
+Publishing uses [npm OIDC trusted publishing](https://docs.npmjs.com/trusted-publishers), so no npm token is stored in the repository — the workflow needs `id-token: write` and a trusted publisher configured for the package on npmjs.org.
 
 ## Contribution
 

@@ -1,5 +1,5 @@
 ---
-'app-actindo': minor
+'@laioutr/app-actindo': minor
 ---
 
 Add the Actindo Storefront Data Service catalog connector — Orchestr handlers mapping the service to the Laioutr canonical entities:
@@ -10,4 +10,4 @@ Add the Actindo Storefront Data Service catalog connector — Orchestr handlers 
 - PDP / PLP / search page types + query templates (category, menu)
 - NuxtImage `actindo` provider and a configurable locale map (`de → de-DE`)
 
-Aligns `@laioutr-core/*` and `@laioutr-app/ui` to the 2.x line and renames the package `my-laioutr-app` → `app-actindo`.
+Aligns `@laioutr-core/*` and `@laioutr-app/ui` to the 2.x line (canonical `0.22.25`, core/frontend/orchestr/kit `0.30.x`, ui `2.2.3`).
