@@ -8,9 +8,12 @@ import type { H3Event } from 'h3';
  * have to import the build-time module definition.
  */
 interface ActindoRuntimeConfig {
-  baseUrl: string;
-  apiKey: string;
+  baseUrl?: string;
+  apiKey?: string;
 }
+
+/** Default service base URL; matches the module's `baseUrl` default. */
+const DEFAULT_BASE_URL = 'https://laioutr.actindo.com';
 
 /**
  * Build an authenticated {@link ActindoClient} from the server runtime
@@ -25,11 +28,11 @@ interface ActindoRuntimeConfig {
  *   overrides are respected. Omit only outside a request (e.g. on startup).
  */
 export function useActindoClient(event?: H3Event): ActindoClient {
-  const config = useRuntimeConfig(event)['my-laioutr-app'] as ActindoRuntimeConfig;
-  const apiKey = config.apiKey || process.env.ACTINDO_API_KEY || '';
+  const config = useRuntimeConfig(event)['app-actindo'] as ActindoRuntimeConfig | undefined;
+  // Both fall back to env then a sane default, so the client works even when the
+  // consuming app overrides the runtime-config key without re-stating every field.
+  const baseUrl = config?.baseUrl || process.env.ACTINDO_BASE_URL || DEFAULT_BASE_URL;
+  const apiKey = config?.apiKey || process.env.ACTINDO_API_KEY || '';
 
-  return createActindoClient({
-    baseUrl: config.baseUrl,
-    apiKey,
-  });
+  return createActindoClient({ baseUrl, apiKey });
 }

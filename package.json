@@ -43,7 +43,7 @@
     "> 0.5% and not dead"
   ],
   "dependencies": {
-    "@laioutr-core/kit": "^0.28.8",
+    "@laioutr-core/kit": "^0.30.3",
     "@nuxt/kit": "3.16.2",
     "defu": "^6.1.4",
     "ofetch": "^1.4.1",
@@ -51,7 +51,7 @@
   },
   "devDependencies": {
     "@changesets/cli": "^2.31.0",
-    "@laioutr-app/ui": "^1.32.2",
+    "@laioutr-app/ui": "^2.2.3",
     "@laioutr-core/orchestr-devtools": "^1.7.0",
     "@laioutr/eslint-config": "^1.8.8",
     "@laioutr/prettier-config": "^1.1.0",
@@ -73,9 +73,9 @@
     "vue-tsc": "2.2.10"
   },
   "peerDependencies": {
-    "@laioutr-core/canonical-types": ">=0.22.13",
-    "@laioutr-core/core-types": ">=0.28.8",
-    "@laioutr-core/frontend-core": ">=0.28.8"
+    "@laioutr-core/canonical-types": ">=0.22.25",
+    "@laioutr-core/core-types": ">=0.30.3",
+    "@laioutr-core/frontend-core": ">=0.30.3"
   },
   "engines": {
     "node": ">=22.12.0",

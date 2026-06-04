@@ -13,7 +13,7 @@ vi.mock('ofetch', () => ({
   ofetch: { create: createSpy },
 }));
 
-import { createActindoClient } from '../src/runtime/server/utils/actindoClient';
+import { createActindoClient } from '../src/runtime/server/client/actindoClient';
 
 const VALID_CONFIG = {
   baseUrl: 'https://laioutr.actindo.com',
