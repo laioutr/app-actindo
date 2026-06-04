@@ -20,8 +20,9 @@ export interface ModuleOptions {
    *
    * Resolves server-side to exactly one Actindo tenant. This is a secret: it
    * lives in the private runtime config only and is never exposed to the
-   * client. Prefer injecting it via the `ACTINDO_API_KEY` env var rather than
-   * committing it to `nuxt.config`.
+   * client. Delivered through the Laioutr project config — the
+   * `@laioutr/app-actindo` app entry's `config` in `laioutrrc.json` — like
+   * every standalone connector app.
    *
    * @default '' (must be provided before the client can connect)
    */

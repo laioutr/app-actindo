@@ -13,17 +13,11 @@ export default defineNuxtConfig({
     '@laioutr-core/orchestr-devtools',
   ],
   laioutr: {
+    // The Actindo connection (apiKey + localeMap) lives in `laioutrrc.json`
+    // under the `@laioutr/app-actindo` app entry — same pattern as the other
+    // standalone connector apps. frontend-core injects each app's `config`
+    // into `runtimeConfig[<app name>]`, which the client factory reads.
     laioutrrc: laioutrrc as any,
-  },
-  // The platform supplies the key (module option / `ACTINDO_API_KEY`); the client
-  // factory resolves it from runtime config with an env fallback.
-  runtimeConfig: {
-    '@laioutr/app-actindo': {
-      apiKey: import.meta.env.ACTINDO_API_KEY,
-      // The storefront language is `de`, but the Actindo tenant keys its catalog
-      // under `de-DE` (and does not fall back) — map it so slugs resolve.
-      localeMap: { de: 'de-DE' },
-    },
   },
   devtools: { enabled: true },
   compatibilityDate: '2025-09-11',
