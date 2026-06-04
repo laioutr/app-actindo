@@ -15,11 +15,7 @@ export default defineNuxtConfig({
   laioutr: {
     laioutrrc: laioutrrc as any,
   },
-  // Private (server-only) runtime config for the Actindo connector. The
-  // per-tenant Bearer key is read from the environment (`.env` locally, see
-  // `.env.example`) rather than committed — mirrors how the Shopify connector
-  // sources `import.meta.env.SHOPIFY_DEMO_*`. In production the Laioutr
-  // platform supplies the key (module option / `ACTINDO_API_KEY`); the client
+  // The platform supplies the key (module option / `ACTINDO_API_KEY`); the client
   // factory resolves it from runtime config with an env fallback.
   runtimeConfig: {
     'app-actindo': {
