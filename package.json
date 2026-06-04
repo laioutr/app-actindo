@@ -1,6 +1,6 @@
 {
   "name": "@laioutr/app-actindo",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Actindo connector app for Laioutr",
   "repository": "github:laioutr/app-actindo",
   "license": "MIT",
