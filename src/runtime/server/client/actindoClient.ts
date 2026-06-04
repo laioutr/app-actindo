@@ -80,7 +80,7 @@ export function createActindoClient(config: ActindoClientConfig): ActindoClient 
     throw new Error('[actindo] baseUrl is required to reach the Storefront Data Service.');
   }
   if (!config.apiKey) {
-    throw new Error('[actindo] apiKey is required — provide the per-tenant Bearer key via runtime config or the ACTINDO_API_KEY env var.');
+    throw new Error('[actindo] apiKey is required — set the per-tenant Bearer key in the `@laioutr/app-actindo` app config (laioutrrc.json → apps).');
   }
 
   const raw = ofetch.create({
