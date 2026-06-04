@@ -16,10 +16,14 @@ export default defineNuxtConfig({
     laioutrrc: laioutrrc as any,
   },
   // Private (server-only) runtime config for the Actindo connector. The
-  // per-tenant Bearer key lives here instead of a local .env file.
+  // per-tenant Bearer key is read from the environment (`.env` locally, see
+  // `.env.example`) rather than committed — mirrors how the Shopify connector
+  // sources `import.meta.env.SHOPIFY_DEMO_*`. In production the Laioutr
+  // platform supplies the key (module option / `ACTINDO_API_KEY`); the client
+  // factory resolves it from runtime config with an env fallback.
   runtimeConfig: {
     'app-actindo': {
-      apiKey: 'robert-ley-staging-demo-key',
+      apiKey: import.meta.env.ACTINDO_API_KEY,
       // The storefront language is `de`, but the Actindo tenant keys its catalog
       // under `de-DE` (and does not fall back) — map it so slugs resolve.
       localeMap: { de: 'de-DE' },
