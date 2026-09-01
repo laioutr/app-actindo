@@ -68,6 +68,32 @@ export interface ActindoProductPrices {
   isStartingFrom: boolean;
 }
 
+/**
+ * Product-level option axes and their values.
+ *
+ * NOT part of the Actindo OpenAPI document as of `0.1.0-mvp` — anticipated
+ * only. The service states its field shapes mirror the laioutr canonical
+ * components, so this is modelled on canonical `ProductOptionGroups`.
+ *
+ * The connector derives the same data from the product's variants whenever this
+ * block is absent (which is always, today), so guessing the shape wrong costs
+ * nothing but this declaration. Re-check against `GET /docs/json` once Actindo
+ * ships it; `mapNativeOptionGroups` is the only place that has to move.
+ */
+export interface ActindoOptionGroups {
+  groups: Array<{
+    name: string;
+    wellKnownName?: string;
+    values: Array<{
+      value: string;
+      variantId?: string;
+      available?: boolean;
+      swatch?: ActindoSwatch;
+      image?: ActindoMediaImage;
+    }>;
+  }>;
+}
+
 /** A fully hydrated product, as returned by `/v1/products/batch` and by-slug `expand`. */
 export interface ActindoProduct {
   id: string;
@@ -82,7 +108,21 @@ export interface ActindoProduct {
   defaultVariant?: {
     id?: string;
     options?: string[];
+    /**
+     * `sku`, `status` and `origin` are NOT in the OpenAPI document as of
+     * `0.1.0-mvp` — anticipated only, on the same terms as
+     * {@link ActindoOptionGroups}. The connector resolves the named variant to
+     * fill `sku`/`status` while they are absent, and defaults `origin` to
+     * `derived`. The spec warns that a variant `id` is opaque and must never be
+     * assumed equal to its (mutable) `base.sku`, so `sku` cannot be inferred
+     * from `id` alone.
+     */
+    sku?: string;
+    status?: ActindoAvailability['status'];
+    origin?: 'authored' | 'derived';
   };
+  /** See {@link ActindoOptionGroups} — anticipated, never sent today. */
+  optionGroups?: ActindoOptionGroups;
   description?: {
     html: string;
   };

@@ -7,10 +7,15 @@ import srcModule from '../src/module';
 
 export default defineNuxtConfig({
   modules: [
-    srcModule,
     '@pinia/nuxt', // Added to show in devtools
+    // frontend-core must set up before this app: it copies each `laioutrrc.json`
+    // app entry's `config` onto `nuxt.options[<app name>]`, and this module reads
+    // that key into its runtime config during its own setup. Listed first, the
+    // app would read the key before frontend-core writes it and come up with an
+    // empty `apiKey`.
     '@laioutr-core/frontend-core',
-    '@laioutr-core/orchestr-devtools',
+    srcModule,
+    '@laioutr-core/devtools',
   ],
   laioutr: {
     // The Actindo connection (apiKey + localeMap) lives in `laioutrrc.json`
